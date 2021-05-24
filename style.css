@@ -1,0 +1,112 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+}
+
+:root {
+    --gray: rgb(187, 187, 187);
+    --white: rgb(238, 238, 238);
+    --background: rgb(162, 255, 159);
+    --btnHover: rgb(172, 172, 172);
+    --calcShadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.829), -2px -2px 5px 0px rgba(255, 255, 255, 0.801);
+    --insetShadow: inset 2px 2px 5px rgba(0, 0, 0, 0.521), inset -2px -2px 5px rgba(255, 255, 255, 0.527);
+    --btnShadow: 2px 2px 5px rgba(0, 0, 0, 0.521), -2px -2px 5px rgba(255, 255, 255, 0.568);
+    --opColor: rgb(211, 5, 5);
+}
+
+body {
+    height: 100vh;
+    background-color: var(--gray);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.calculator {
+    margin: auto;
+    background-color: var(--gray);
+    border-radius: 10px;
+    padding: 0 0.5em 1.3em;
+    box-shadow: var(--calcShadow);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat( 4, 3.5em);
+    grid-template-rows: repeat(5, 3.5em);
+    justify-content: center;
+    align-items: center;
+    justify-self: center;
+    margin: 1em;
+    gap: 0.8em;
+}
+
+.span2 {
+    grid-column: span 2;
+}
+
+.span3 {
+    grid-column: span 3;
+}
+
+.display {
+    margin: 2em 0em 1em;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    border-radius: 20px;
+    box-shadow: var(--insetShadow);
+}
+
+.input {
+    word-wrap: break-word;
+    background-color: var(--gray);
+    text-align: right;
+    margin: 0.8em;
+    font-size: 1.5em;
+    font-weight: bold;
+    font-family: inherit;
+}
+
+button {
+    font-family: inherit;
+    font-weight: 500;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    font-size: 1.1em;
+    border-radius: 50px;
+    background-color: var(--gray);
+    box-shadow: var(--btnShadow);
+}
+
+.operator {
+    font-size: 1.5em;
+    font-weight: 500;
+}
+
+.arrow {
+    font-size: 1.7em;
+}
+
+button:active {
+    font-size: 1.05em;
+    box-shadow: var(--insetShadow)
+}
+
+button:hover {
+    background-color: var(--btnHover);
+}
+
+.operator,
+.equal {
+    color: var(--opColor)
+}
