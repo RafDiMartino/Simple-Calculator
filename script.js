@@ -4,7 +4,7 @@ let previousOperator = null;
 
 const screen = document.querySelector(".screen");
 
-function buttonClick(value) {
+const buttonClick = (value) => {
     if (isNaN(value)) {
         handleOperator(value)
     } else {
@@ -13,7 +13,7 @@ function buttonClick(value) {
     screen.innerText = buffer;
 }
 
-function handleOperator(operator){
+const handleOperator = (operator) => {
     switch (operator) {
         case "C":
             buffer = "0";
@@ -23,18 +23,26 @@ function handleOperator(operator){
             if (previousOperator === null) {
                 return
             }
-            flushOperation(parseInt(buffer));
+            flushOperation(parseFloat(buffer));
             previousOperator = null;
             buffer = runningTotal;
             runningTotal = 0;
             break
         case "←":
-            if (buffer.length === 1) {
-                buffer ="0";
-            } else {
-                buffer = buffer.substring(0, buffer.length -1)
+            try {
+                if (buffer.length === 1) {
+                    buffer ="0";
+                } else {
+                    buffer = buffer.substring(0, buffer.length -1)
+                }
+            } catch (error) {
+              console.log("Operation not allowed")  
             }
+
             break
+        case ".":
+            inputDecimal(operator)
+            break;
         case "+":
         case "−":
         case "×":
@@ -44,37 +52,45 @@ function handleOperator(operator){
     }
 };
 
-function handleMath(operator) {
+const handleMath = (operator) => {
     if (buffer === "0"){
         return
     }
-
-    const intBuffer = parseInt(buffer);
+    const floatBuffer = parseFloat(buffer);
 
     if (runningTotal === 0) {
-        runningTotal = intBuffer;
+        runningTotal = floatBuffer;
     } else {
-        flushOperation(intBuffer);
+        flushOperation(floatBuffer);
     }
 
-    previousOperator = operator;
+    previousOperator = operator ;
 
     buffer = "0";
 };
 
-function flushOperation(intBuffer){
-    if (previousOperator === "+") {
-        runningTotal += intBuffer;
-    } else if (previousOperator === "−"){
-        runningTotal -= intBuffer;
-    } else if (previousOperator === "÷"){
-        runningTotal /= intBuffer;
+const inputDecimal = () => {
+    if (previousOperator === "0") {
+        buffer = "0.";
+      return
     } else {
-        runningTotal *= intBuffer;
+        buffer += "."
+    }
+  }
+
+const flushOperation = (floatBuffer) => {
+    if (previousOperator === "+") {
+        runningTotal += floatBuffer;
+    } else if (previousOperator === "−"){
+        runningTotal -= floatBuffer;
+    } else if (previousOperator === "÷"){
+        runningTotal /= floatBuffer;
+    } else {
+        runningTotal *= floatBuffer;
     }
 }
 
-function handleNumber(numberString){
+const handleNumber = (numberString) => {
     if (buffer === "0") {
         buffer = numberString;
     } else {
@@ -85,14 +101,11 @@ function handleNumber(numberString){
 
 // works also without a function
 
-function init() {
+const init = () => {
     document.querySelector(".keys")
         .addEventListener("click", function(e){
             buttonClick(e.target.innerText);
         })
-
 }
 
 init();
-
-
